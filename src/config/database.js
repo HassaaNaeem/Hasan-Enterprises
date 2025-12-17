@@ -2,19 +2,23 @@ import mongoose from 'mongoose';
 
 const connectDB = async () => {
   try {
-    let mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/hasan_enterprises';
+    const mongoUri = process.env.MONGODB_URI;
     
-    if (mongoUri.includes('mongodb+srv://') && !mongoUri.includes('.mongodb.net/hasan_enterprises')) {
-      mongoUri = mongoUri.replace('.mongodb.net/', '.mongodb.net/hasan_enterprises');
+    if (!mongoUri) {
+      throw new Error('MONGODB_URI is not defined in environment variables');
     }
     
     const conn = await mongoose.connect(mongoUri, {
       serverSelectionTimeoutMS: 30000,
-      connectTimeoutMS: 30000
+      connectTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+      retryWrites: true
     });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`✓ MongoDB Connected: ${conn.connection.host}`);
+    return conn;
   } catch (error) {
-    console.error(`MongoDB Connection Error: ${error.message}`);
+    console.error(`✗ MongoDB Connection Error: ${error.message}`);
+    process.exit(1);
   }
 };
 
