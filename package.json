@@ -1,0 +1,32 @@
+{
+  "name": "hasan-enterprises-backend",
+  "version": "1.0.0",
+  "description": "Plot Purchase Management System for Hasan Enterprises",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [
+    "plot-management",
+    "real-estate",
+    "express",
+    "mongodb"
+  ],
+  "author": "Hasan Enterprises",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1",
+    "express-validator": "^7.3.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.20.3",
+    "morgan": "^1.10.1",
+    "multer": "^1.4.5-lts.1",
+    "uuid": "^9.0.1"
+  }
+}
