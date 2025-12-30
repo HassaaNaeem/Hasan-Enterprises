@@ -92,7 +92,7 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password) {
+    if (!(email && password)) {
       return res
         .status(400)
         .json({ success: false, message: "Please provide email and password" });

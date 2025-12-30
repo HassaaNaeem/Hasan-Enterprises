@@ -3,6 +3,12 @@ import User from "../models/User.js";
 import "dotenv/config";
 console.log(process.env.SESSION_SECRET);
 
+const reqEx = {
+  cookies: {
+    token: "Bearer HJKGHJKHJKLHJ",
+  },
+};
+
 export const protect = async (req, res, next) => {
   let token;
 

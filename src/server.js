@@ -27,11 +27,32 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+// Conditional body parser middleware - skips file upload routes
+app.use((req, res, next) => {
+  // Skip body parsing for file upload routes
+  if (req.path.includes("/documents") && req.method === "POST") {
+    console.log("Skipping body parser for file upload route:", req.path);
+    return next();
+  }
+
+  // Apply body parsers for all other routes
+  express.json()(req, res, next);
+});
+
+app.use((req, res, next) => {
+  // Skip for file upload routes
+  if (req.path.includes("/documents") && req.method === "POST") {
+    return next();
+  }
+
+  express.urlencoded({ extended: true })(req, res, next);
+});
+
 app.use(cookieParser());
 app.use(morgan("dev"));
 
+// Serve static files from uploads directory
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.get("/", (req, res) => {
@@ -53,6 +74,7 @@ app.get("/health", (req, res) => {
   res.json({ success: true, message: "Server is healthy" });
 });
 
+// All routes
 app.use("/api", routes);
 
 app.use(notFound);
