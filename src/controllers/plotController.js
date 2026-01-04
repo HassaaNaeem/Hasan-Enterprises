@@ -269,6 +269,14 @@ export const verifyPlotDocuments = async (req, res) => {
     const { plotId } = req.params;
     const { status, serviceProviderId } = req.body;
 
+    // Validate status
+    if (!['verified', 'rejected'].includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Status must be either "verified" or "rejected"'
+      });
+    }
+
     const plotDetails = await PlotDetails.findOne({ plotId });
     if (!plotDetails) {
       return res
@@ -276,7 +284,9 @@ export const verifyPlotDocuments = async (req, res) => {
         .json({ success: false, message: "Plot details not found" });
     }
 
-    plotDetails.status = status;
+    // Update PlotDetails status
+    plotDetails.status = status; // 'verified' or 'rejected'
+    plotDetails.updatedAt = new Date();
     await plotDetails.save();
 
     if (status === "verified") {
