@@ -38,21 +38,25 @@ const connectDB = async () => {
     console.log(`✓ MongoDB Connected:`);
     return conn;
   } catch (error) {
-    console.error(`✗ MongoDB Connection Error:`);
-    process.exit(1);
+    console.error(`✗ MongoDB Connection Error:`, error.message);
+    isConnected = false; // just mark as disconnected, don't exit
   }
 };
 
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   if (!isConnected) {
-    connectDB();
+    await connectDB();
   }
   next();
 });
 
 app.use(
   cors({
-    origin: true,
+    origin: [
+      "http://localhost:8080",
+      "http://localhost:5173",
+      "https://your-frontend.vercel.app",
+    ],
     credentials: true,
   }),
 );
