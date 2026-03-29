@@ -55,7 +55,7 @@ app.use(
     origin: [
       "http://localhost:8080",
       "http://localhost:5173",
-      "https://your-frontend.vercel.app",
+      "https://real-estate-management-system-omega.vercel.app",
     ],
     credentials: true,
   }),
