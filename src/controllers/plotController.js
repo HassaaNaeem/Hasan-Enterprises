@@ -57,7 +57,8 @@ export const createPlot = async (req, res) => {
 
     let imageUri = null;
     if (req.files && req.files.plotImage) {
-      imageUri = `uploads/plots/${req.files.plotImage[0].filename}`;
+      console.log("Cloudinary file:", req.files.plotImage[0]);
+      imageUri = req.files.plotImage[0].path;
     }
 
     const plot = await Plot.create({

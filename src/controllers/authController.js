@@ -23,7 +23,7 @@ export const register = async (req, res) => {
     let imageUri = null;
 
     if (req.files && req.files.image) {
-      imageUri = `uploads/image/${req.files.image[0].filename}`;
+      imageUri = req.files.image[0].path;
     }
 
     if (role === "purchaser" || !role) {

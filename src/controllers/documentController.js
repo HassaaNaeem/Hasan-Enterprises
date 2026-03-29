@@ -33,9 +33,7 @@ export const uploadDocument = async (req, res) => {
       });
     }
 
-    const file = req.files.document[0];
-    const filename = `${documentType.toLowerCase()}-${plotId}-${uuidv4()}.pdf`;
-    const uri = `/uploads/documents/${filename}`;
+    const uri = req.files.document[0].path;
 
     // Convert plotId to ObjectId for proper MongoDB query
     const plotObjectId = mongoose.Types.ObjectId.isValid(plotId)
