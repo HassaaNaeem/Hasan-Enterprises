@@ -5,8 +5,8 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "cd src && node server.js",
     "dev": "node --watch src/server.js",
+    "start": "cd src && node server",
     "vercel-start": "cd src && node server.js"
   },
   "keywords": [
