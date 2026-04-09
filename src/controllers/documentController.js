@@ -33,7 +33,16 @@ export const uploadDocument = async (req, res) => {
       });
     }
 
-    const uri = req.files.document[0].path;
+    const file = req.files?.document?.[0];
+
+    if (!file) {
+      return res.status(400).json({
+        success: false,
+        message: "Document file missing",
+      });
+    }
+
+    const uri = file.path; // ✅ Cloudinary URL
 
     // Convert plotId to ObjectId for proper MongoDB query
     const plotObjectId = mongoose.Types.ObjectId.isValid(plotId)
